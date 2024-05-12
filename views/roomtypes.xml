@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_roomtypes_tree" model="ir.ui.view">
+            <field name="name">roomtypes.tree</field>
+            <field name="model">hotel.roomtypes</field>
+            <field name="arch" type="xml">
+                <tree string="Room Types">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="room_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_roomtypes_form" model="ir.ui.view">
+            <field name="name">roomtypes.form</field>
+            <field name="model">hotel.roomtypes</field>
+            <field name="arch" type="xml">
+                <form string="Room Type">
+                    <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="description"/>      
+                    </group>
+                        <!-- Notebook -->
+                        <notebook>
+                            <!-- Page 1: Daily Charges -->
+                            <page string="Daily Charges" name="page_daily_charges">
+                                <!-- Detail Line Page for Daily Charges -->
+                                <field name="dailycharges_ids">
+                                    <tree editable="bottom">
+                                        <field name="charge_id"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <!-- Page 2: Images -->
+                            <page string="Images">
+                                <!-- Add fields for room and bathroom images -->
+                                <group>
+                                    <field name="imageroom" widget="image"/>
+                                    <field name="imagebathroom" string="Bathroom" widget="image"/>
+                                </group>
+                            </page>
+
+                            <page string="Rooms" name="third_page">
+                                <field name="room_ids" readonly="1">
+                                    <tree >
+                                    <field name="name"/>  
+                                    <field name="description"/>                   
+                                    </tree>
+                                </field>
+                                </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_roomtypes" model="ir.actions.act_window">
+            <field name="name">Room Types</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hotel.roomtypes</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem 
+        name="Room Types" 
+        id="menu_roomtypes" 
+        parent="hotel_menu_masterlists"
+        sequence="3"
+        action="action_roomtypes"/>
+    </data>
+</odoo>
